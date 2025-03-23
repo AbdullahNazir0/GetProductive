@@ -1,0 +1,40 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+.log/
+
+# Build artifacts
+dist/
+coverage/
+public/
+.vite/
+.vitepress/cache/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# MongoDB database dumps
+dump/
+
+# Editor-specific files
+.vscode/
+.idea/
+.DS_Store
+thumbs.db
+zed/
+
+# Express-specific files
+/tmp
+/uploads
