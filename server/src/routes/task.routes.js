@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { verifyJwt } from '../middlewares/auth.middleware.js'
 
 const router = Router()
 
@@ -10,10 +11,12 @@ import {
   deleteTask
 } from '../controllers/task.controllers.js'
 
-router.get('/', getTasks)
-router.get('/:id', getTaskById)
-router.post('/', createTask)
-router.put('/:id', updateTask)
-router.delete('/:id', deleteTask)
+router.route('/')
+  .get(verifyJwt, getTasks)
+  .post(verifyJwt, createTask)
+router.route('/:id')
+  .get(verifyJwt, getTaskById)
+  .put(verifyJwt, updateTask)
+  .delete(verifyJwt, deleteTask)
 
 export default router

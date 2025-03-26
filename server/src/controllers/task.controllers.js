@@ -7,22 +7,26 @@ const createTask = asyncHandler(async (req, res) => {
   const { title, description, deadline, priority } = req.body
   const id = req.userId
 
-  if (title.trim() === '') {
+  if (title.trim() == '') {
     throw new ApiError(400, 'Title is required')
   }
 
-  const createdTask = await Task.create({
-    title,
-    description,
-    deadline,
-    priority,
-    userId: req.userId
-  })
-  if (!createdTask) {
-    throw new ApiError(500, 'Failed to create task')
+  try {
+    const createdTask = await Task.create({
+      title,
+      description,
+      deadline,
+      priority,
+      userId: req.userId
+    })
+  } catch(error) {
+    console.log(error)
   }
+  // if (!createdTask) {
+  //   throw new ApiError(500, 'Failed to create task')
+  // }
 
-  res.status(201).json(new ApiResponse(201, createdTask, 'Task created successfully'))
+  res.status(201).json(new ApiResponse(201, 'createdTask', 'Task created successfully'))
 })
 
 const getTasks = asyncHandler(async (req, res) => {
@@ -55,7 +59,7 @@ const updateTask = asyncHandler(async (req, res) => {
     throw new ApiError(404, 'Task not found')
   }
 
-  const { title, description, deadline, priority } = req.body
+  const { title, description, deadline, priority, isDone } = req.body
 
   if (title.trim() === '') {
     throw new ApiError(400, 'Title is required')
@@ -65,7 +69,8 @@ const updateTask = asyncHandler(async (req, res) => {
     title,
     description,
     deadline,
-    priority
+    priority,
+    isDone
   }, { new: true })
   if (!updatedTask) {
     throw new ApiError(500, 'Failed to update task')
